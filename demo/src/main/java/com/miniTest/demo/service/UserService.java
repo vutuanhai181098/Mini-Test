@@ -1,6 +1,7 @@
 package com.miniTest.demo.service;
 
 import com.miniTest.demo.dto.UserDto;
+import com.miniTest.demo.request.AvatarRequest;
 import com.miniTest.demo.request.UpdatePasswordRequest;
 import com.miniTest.demo.request.UserRequest;
 
@@ -19,7 +20,7 @@ public interface UserService {
 
     void deleteUser(Integer id);
 
-    void updateAvatar(Integer id, String path);
+    void updateAvatar(Integer id, AvatarRequest avatarRequest);
 
     void updatePassword(Integer id, UpdatePasswordRequest request);
 

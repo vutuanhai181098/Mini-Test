@@ -1,6 +1,7 @@
 package com.miniTest.demo.controller;
 
 import com.miniTest.demo.dto.UserDto;
+import com.miniTest.demo.request.AvatarRequest;
 import com.miniTest.demo.request.UpdatePasswordRequest;
 import com.miniTest.demo.request.UserRequest;
 import com.miniTest.demo.service.UserService;
@@ -56,8 +57,8 @@ public class UserController {
 
     //7. Thay đổi ảnh avatar
     @PutMapping("/users/{id}/update-avatar")
-    public ResponseEntity<?> updateAvatar(@PathVariable Integer id,@RequestBody String path){
-        userService.updateAvatar(id, path);
+    public ResponseEntity<?> updateAvatar(@PathVariable Integer id,@RequestBody AvatarRequest avatarRequest){
+        userService.updateAvatar(id, avatarRequest);
         return ResponseEntity.noContent().build();
     }
 

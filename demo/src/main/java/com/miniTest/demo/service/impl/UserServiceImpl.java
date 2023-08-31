@@ -6,6 +6,7 @@ import com.miniTest.demo.exception.ResourceNotFoundException;
 import com.miniTest.demo.mapper.UserMapper;
 import com.miniTest.demo.model.User;
 import com.miniTest.demo.repository.UserRepository;
+import com.miniTest.demo.request.AvatarRequest;
 import com.miniTest.demo.request.UpdatePasswordRequest;
 import com.miniTest.demo.request.UserRequest;
 import com.miniTest.demo.service.UserService;
@@ -76,11 +77,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateAvatar(Integer id, String path) {
+    public void updateAvatar(Integer id, AvatarRequest avatarRequest) {
         User user = userRepository.getUserById(id).orElseThrow(() -> {
             throw new ResourceNotFoundException("Not found user");
         });
-        user.setAvatar(path);
+        user.setAvatar(avatarRequest.getPath());
     }
 
     @Override

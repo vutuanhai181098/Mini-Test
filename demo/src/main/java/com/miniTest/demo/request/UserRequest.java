@@ -12,7 +12,6 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class UserRequest {
     @NotBlank(message = "Name cannot be left blank.")
-    @Pattern(regexp = "^[a-zA-Z ]+$", message = "Name can only contain letters.")
     String name;
 
     @Email(regexp = "^[A-Za-z0-9][a-zA-Z0-9\\.]{6,32}@gmail\\.com$", message = "Email không hợp lệ.")
