@@ -29,7 +29,8 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> getUsers(int page, int limit) {
         List<User> userList = userRepository.getAllUser();
         int from = (page - 1) * limit;
-        List<User> list = userList.subList(from, (from + limit));
+        int end = Math.min((from + limit), userList.size());
+        List<User> list = userList.subList(from, end);
         return list.stream().map(user -> {
             return userMapper.mapToDto(user);
         }).collect(Collectors.toList());
