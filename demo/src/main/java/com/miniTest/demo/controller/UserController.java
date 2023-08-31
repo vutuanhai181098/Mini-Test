@@ -1,6 +1,7 @@
 package com.miniTest.demo.controller;
 
 import com.miniTest.demo.dto.UserDto;
+import com.miniTest.demo.request.UpdatePasswordRequest;
 import com.miniTest.demo.request.UserRequest;
 import com.miniTest.demo.service.UserService;
 import jakarta.validation.Valid;
@@ -55,8 +56,21 @@ public class UserController {
 
     //7. Thay đổi ảnh avatar
     @PutMapping("/users/{id}/update-avatar")
-    public ResponseEntity<?> updateAvatar(@PathVariable Integer id,@Valid @RequestBody UserRequest userRequest){
-        userService.updateAvatar(id, userRequest);
+    public ResponseEntity<?> updateAvatar(@PathVariable Integer id,@RequestBody String path){
+        userService.updateAvatar(id, path);
         return ResponseEntity.noContent().build();
+    }
+
+    //8. 8. Thay đổi mật khẩu
+    @PutMapping("/users/{id}/update-password")
+    public ResponseEntity<?> updatePassword(@PathVariable Integer id, @RequestBody UpdatePasswordRequest request){
+        userService.updatePassword(id, request);
+        return ResponseEntity.noContent().build();
+    }
+
+    //9. Quên mật khẩu
+    @PostMapping("/users/{id}/fotgot-password")
+    public ResponseEntity<?> forgotPassword(@PathVariable Integer id){
+        return new ResponseEntity<>(userService.forgotPassword(id), HttpStatus.OK);
     }
 }

@@ -1,5 +1,6 @@
 package com.miniTest.demo.utils;
 
+import com.miniTest.demo.database.UserDB;
 import com.miniTest.demo.model.User;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
@@ -49,6 +50,7 @@ public class ExcelReader implements IFileReader{
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+        User.autoId.set(userList.size());
         return userList;
     }
 

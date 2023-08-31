@@ -1,6 +1,7 @@
 package com.miniTest.demo.service;
 
 import com.miniTest.demo.dto.UserDto;
+import com.miniTest.demo.request.UpdatePasswordRequest;
 import com.miniTest.demo.request.UserRequest;
 
 import java.util.List;
@@ -18,5 +19,9 @@ public interface UserService {
 
     void deleteUser(Integer id);
 
-    void updateAvatar(Integer id, UserRequest userRequest);
+    void updateAvatar(Integer id, String path);
+
+    void updatePassword(Integer id, UpdatePasswordRequest request);
+
+    String forgotPassword(Integer id);
 }

@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
 public class User {
-    static AtomicInteger autoId = new AtomicInteger(UserDB.userList.size());
+    public static AtomicInteger autoId = new AtomicInteger(0);
     Integer id;
     String name;
     String email;
@@ -22,12 +22,12 @@ public class User {
     String avatar;
     String password;
 
-    public User(String name, String email, String phone, String address, String avatar, String password){
-        this.id = autoId.getAndIncrement();
+    public User(String name, String email, String phone, String address, String password){
+        this.id = autoId.incrementAndGet();
         this.name = name;
+        this.email = email;
         this.phone = phone;
         this.address = address;
-        this.avatar = avatar;
         this.password = password;
     }
 }

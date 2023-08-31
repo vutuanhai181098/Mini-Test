@@ -22,6 +22,14 @@ public class CustomHandleException {
         );
     }
 
+    @ExceptionHandler(ErrorPasswordException.class)
+    public ResponseEntity<?> handleErrorPasswordException(ErrorPasswordException e){
+        return new ResponseEntity<>(
+                new ErrorResponse(HttpStatus.NOT_FOUND, e.getMessage()),
+                HttpStatus.NOT_FOUND
+        );
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e){
         return new ResponseEntity<>(

@@ -27,26 +27,13 @@ public class UserMapperImpl implements UserMapper {
         String phone = userRequest.getPhone();
         String address = userRequest.getAddress();
         String password = userRequest.getPassword();
-        String avatar = userRequest.getAvatar();
-        return new User(name, email, phone, address, avatar, password);
+        return new User(name, email, phone, address, password);
     }
 
     @Override
     public void updateUser(UserRequest userRequest, User user) {
-        if(userRequest.getName() != null){
-            user.setName(userRequest.getName());
-        }
-        if(userRequest.getEmail() != null){
-            user.setEmail(userRequest.getEmail());
-        }
-        if(userRequest.getPhone() != null){
-            user.setPhone(userRequest.getPhone());
-        }
-        if(userRequest.getAddress() != null){
-            user.setAddress(userRequest.getAddress());
-        }
-        if(userRequest.getAvatar() != null){
-            user.setAvatar(userRequest.getAvatar());
-        }
+        user.setName(userRequest.getName());
+        user.setPhone(userRequest.getPhone());
+        user.setAddress(userRequest.getAddress());
     }
 }

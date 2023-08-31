@@ -1,18 +1,19 @@
 package com.miniTest.demo.service.impl;
 
 import com.miniTest.demo.dto.UserDto;
+import com.miniTest.demo.exception.ErrorPasswordException;
 import com.miniTest.demo.exception.ResourceNotFoundException;
 import com.miniTest.demo.mapper.UserMapper;
 import com.miniTest.demo.model.User;
 import com.miniTest.demo.repository.UserRepository;
+import com.miniTest.demo.request.UpdatePasswordRequest;
 import com.miniTest.demo.request.UserRequest;
-import com.miniTest.demo.response.ErrorResponse;
 import com.miniTest.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,6 +54,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto createUser(UserRequest userRequest) {
         User user = userMapper.mapToModel(userRequest);
+        userRepository.save(user);
         return userMapper.mapToDto(user);
     }
 
@@ -74,10 +76,52 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateAvatar(Integer id, UserRequest userRequest) {
+    public void updateAvatar(Integer id, String path) {
         User user = userRepository.getUserById(id).orElseThrow(() -> {
             throw new ResourceNotFoundException("Not found user");
         });
-        userMapper.updateUser(userRequest, user);
+        user.setAvatar(path);
+    }
+
+    @Override
+    public void updatePassword(Integer id, UpdatePasswordRequest request) {
+        User user = userRepository.getUserById(id).orElseThrow(() -> {
+            throw new ResourceNotFoundException("Not found user");
+        });
+        if(!user.getPassword().equals(request.getOldPassword())){
+            throw new ErrorPasswordException("Incorrect password");
+        }
+        if(request.getOldPassword().equals(request.getNewPassword())){
+            throw new ErrorPasswordException("The new password must not be the same as the old password");
+        }
+        user.setPassword(request.getNewPassword());
+    }
+
+    @Override
+    public String forgotPassword(Integer id) {
+        User user = userRepository.getUserById(id).orElseThrow(() -> {
+            throw new ResourceNotFoundException("Not found user");
+        });
+        String newPass = randomPassword();
+        user.setPassword(newPass);
+        return newPass;
+    }
+
+    private String randomPassword(){
+        final String CHARACTERS =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[{]};:',<.>/?";
+        String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*()-_=+[{]};:',<.>/?]).{8,21}$";
+        Random random = new Random();
+        int n = CHARACTERS.length();
+        do {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 8; i++) {
+                int idx = random.nextInt(n);
+                sb.append(CHARACTERS.charAt(idx));
+            }
+            if(sb.toString().matches(regex)){
+                return sb.toString();
+            }
+        } while (true);
     }
 }
