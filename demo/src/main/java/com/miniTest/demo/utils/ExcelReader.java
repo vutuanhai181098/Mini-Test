@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,8 +19,8 @@ public class ExcelReader implements IFileReader{
     private final int COLUMN_INDEX_NAME = 1;
     private final int COLUMN_INDEX_EMAIL = 2;
     private final int COLUMN_INDEX_PHONE = 3;
-    private final int COLUMN_INDEX_ADDRESS = 4;
-    private final int COLUMN_INDEX_AVATAR = 5;
+    private final int COLUMN_INDEX_AVATAR = 4;
+    private final int COLUMN_INDEX_ADDRESS = 5;
     private final int COLUMN_INDEX_PASSWORD = 6;
     @Override
     public List<User> readFile(String filePath) {
@@ -56,7 +57,7 @@ public class ExcelReader implements IFileReader{
         Object cellValue = getCellValue(cell);
         switch (columnIndex){
             case COLUMN_INDEX_ID :
-                user.setId((Integer) cellValue);
+                user.setId(BigDecimal.valueOf((Double) cellValue).intValue());
                 break;
             case COLUMN_INDEX_NAME :
                 user.setName((String) cellValue);
