@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.getUserById(id).orElseThrow(() -> {
             throw new ResourceNotFoundException("Not found user");
         });
-        user.setAvatar(avatarRequest.getPath());
+        user.setAvatar(avatarRequest.getAvatar());
     }
 
     @Override
@@ -89,10 +89,10 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.getUserById(id).orElseThrow(() -> {
             throw new ResourceNotFoundException("Not found user");
         });
-        if(!user.getPassword().equals(request.getOldPassword())){
+        if (!user.getPassword().equals(request.getOldPassword())) {
             throw new ErrorPasswordException("Incorrect password");
         }
-        if(request.getOldPassword().equals(request.getNewPassword())){
+        if (request.getOldPassword().equals(request.getNewPassword())) {
             throw new ErrorPasswordException("The new password must not be the same as the old password");
         }
         user.setPassword(request.getNewPassword());
@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
         return newPass;
     }
 
-    private String randomPassword(){
+    private String randomPassword() {
         final String CHARACTERS =
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[{]};:',<.>/?";
         String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*()-_=+[{]};:',<.>/?]).{8,21}$";
@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService {
                 int idx = random.nextInt(n);
                 sb.append(CHARACTERS.charAt(idx));
             }
-            if(sb.toString().matches(regex)){
+            if (sb.toString().matches(regex)) {
                 return sb.toString();
             }
         } while (true);

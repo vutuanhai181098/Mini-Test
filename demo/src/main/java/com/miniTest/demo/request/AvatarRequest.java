@@ -10,5 +10,5 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AvatarRequest {
-    private String path;
+    private String avatar;
 }

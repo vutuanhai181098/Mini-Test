@@ -64,13 +64,13 @@ public class UserController {
 
     //8. 8. Thay đổi mật khẩu
     @PutMapping("/users/{id}/update-password")
-    public ResponseEntity<?> updatePassword(@PathVariable Integer id, @RequestBody UpdatePasswordRequest request){
+    public ResponseEntity<?> updatePassword(@PathVariable Integer id,@Valid @RequestBody UpdatePasswordRequest request){
         userService.updatePassword(id, request);
         return ResponseEntity.noContent().build();
     }
 
     //9. Quên mật khẩu
-    @PostMapping("/users/{id}/fotgot-password")
+    @PostMapping("/users/{id}/forgot-password")
     public ResponseEntity<?> forgotPassword(@PathVariable Integer id){
         return new ResponseEntity<>(userService.forgotPassword(id), HttpStatus.OK);
     }
